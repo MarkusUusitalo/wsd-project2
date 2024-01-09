@@ -1,0 +1,24 @@
+
+<% layout("./layouts/layout.eta") %>
+
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Register</h1>
+    <p>Already have an account? <a href="./login/">Login</a></p>
+    <%if (it.error) { %>
+        <p style="color: red;"><%= it.error %></p>
+    <% } %>
+    <form method="POST" action="/auth/register">
+        <input type="email" name="email" placeholder="email" />
+        <input type="password" name="password" placeholder="password" minlength="4" />
+        <input type="submit" value="Submit!" />
+    </form>
+</body>
+

@@ -1,0 +1,33 @@
+<% layout("./layouts/layout.eta") %>
+<head>
+  <style>
+    body {
+      text-align: center;
+      display: flex;
+    }
+    .sidebar {
+      flex: 1;
+      border-right: 1px solid #ddd;
+      padding: 20px;
+    }
+    .main-content {
+      flex: 3;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-content">
+    <h2>Quiz app for quizzing!</h2>
+    <p>This app is a quiz application designed for quizzing purposes. It allows users to login or register, view statistics related to topics, questions, and answers, and participate in quizzes. Users can also add questions to the topics but only admins can add topics. Start by registering!</p>
+    <h3>Login or register</h3>
+  <a href="/auth/login" style="margin-right: 10px;">Login</a>
+  <a href="/auth/register" style="margin-right: 10px;">Register</a>
+  </div>
+
+  <div class= "container">
+  <h4>Statistics</h4>
+  <h5>Topics: <%=it.topicCount%>, Questions: <%=it.questionCount%>, Answers: <%=it.answerCount%></h5>
+  </div>
+</body>

@@ -1,0 +1,44 @@
+<% layout("./layouts/layout.eta") %>
+
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+
+
+<h1>TOPICS</h1>
+
+<% if (it.topics && it.topics.length > 0) { %>
+  <ul style="list-style-type: none; padding-left: 0;">
+    <% it.topics.forEach((topic) => { %>
+      <li class="topic-list-item">
+        <a class="topic-link" href="/topics/<%=topic.id%>"><h3><%= topic.name %></h3></a>
+        <% if (it.user && it.user.admin) {%>
+        <form method="POST" action="/topics/<%=topic.id%>/delete">
+          <input type="submit" value="Delete" class="button" />
+        </form>
+        <% } %>
+      </li>
+    <% }); %>
+  </ul>
+<% } else { %>
+  <p>None available.</p>
+<% } %>
+
+<% if (it.error) { %>
+  <p style="color: red;"><%= it.error %></p>
+<% } %>
+
+<% if (it.user && it.user.admin) { %>
+  <form method="POST" action="/topics">
+    <h3>Add a new topic</h3>
+    Topic name:<br/>
+    <input class="input-field" type="text" name="name" required/><br/>
+    <input type="hidden" name="user_id" value="<%= it.user.id %>" /><br/>
+    <input type="submit" value="Add" class="button"/>
+  </form>
+<% } %>
+

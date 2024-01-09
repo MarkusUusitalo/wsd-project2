@@ -1,0 +1,13 @@
+<% layout("./layouts/layout.eta") %>
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Correct!</h1>
+    <a href="/quiz/<%= it.topic.id %>" style="margin-right: 10px;">Next question</a>
+</body>

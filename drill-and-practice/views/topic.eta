@@ -1,0 +1,39 @@
+<% layout("./layouts/layout.eta") %>
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<h1><% = it.topic.name%> </h1>
+
+
+<form method="POST" action="/topics/<%= it.topic.id%>/questions">
+  Add a question:<br/>
+  <textarea name="question_text" required></textarea><br/>
+  <input type="hidden" name="topic_id" value="<% = it.topic.id%>"/>
+  <input type="hidden" name="user_id" value="1"/>
+  <input type="submit" value="Add"/>
+  </form>
+
+  <h2>Topic questions</h2>
+
+<% if (it.questions && it.questions.length > 0) { %>
+
+<ul>
+<% it.questions.forEach(question => { %>
+  <li><a href = "/topics/<% = it.topic.id%>/questions/<%= question.id%>"> <%= question.question_text%></a> </li>
+<% }); %>
+</ul>
+
+<% } else { %>
+
+<p>None available.</p>
+
+<% } %>
+
+<p>Back to the topics list?</p>
+<p><a href = "/topics" > Topics</a></p>
+

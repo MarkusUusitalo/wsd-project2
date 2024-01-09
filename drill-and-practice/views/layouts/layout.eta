@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Quiz app</title>
+    <!-- Existing CSS links -->
+    <style>
+      .flex-container {
+        display: flex;
+        flex-direction: row;
+      }
+      .sidebar {
+        flex: 1; /* Adjust size as needed */
+        padding: 10px;
+      }
+      .container.paper {
+        flex: 3; /* Adjust size as needed */
+        padding: 10px;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex-container">
+      <div class="sidebar">
+        <ul>
+          <li><a href="/topics">Topics</a></li>
+          <li><a href="/quiz">Quiz</a></li>
+          <li><a href="/">Main</a></li>
+        </ul>
+      </div>
+      <div class="container paper">
+        <%~ it.body %>
+      </div>
+    </div>
+  </body>
+</html>

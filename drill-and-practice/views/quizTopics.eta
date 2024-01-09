@@ -1,0 +1,25 @@
+<% layout("./layouts/layout.eta") %>
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<h1> TOPICS </h1>
+<% if (it.error) { %>
+<p style="color: red;"><%= it.error %></p>
+<% } %>
+
+<% if (it.topics && it.topics.length > 0) { %>
+<ul style="list-style-type: none;">
+<% it.topics.forEach((topic) => { %>
+  <li >
+    <a href="/quiz/<%=topic.id%>" style="margin-right: 20px"><h3><%= topic.name %></h3></a>
+  </li>
+<% }); %>
+</ul>
+<% } else { %>
+<p>None available.</p>
+<% } %>

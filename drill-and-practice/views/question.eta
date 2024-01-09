@@ -1,0 +1,55 @@
+<% layout("./layouts/layout.eta") %>
+<head>
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+</head>
+
+
+<div class="container">
+    <div class="main-content">
+        <h1><%= it.question.question_text %></h1>
+
+        <form method="POST" action="/topics/<%= it.question.topic_id %>/questions/<%= it.question.id %>/options">
+            <label for="option_text">Option Text:</label>
+            <textarea name="option_text" id="option_text" required></textarea><br/>
+
+            <label for="is_correct">Correct:</label>
+            <input type="checkbox" name="is_correct" id="is_correct"><br/>
+            <input type="hidden" name="question_id" value="<%= it.question.id %>"/>
+            <input type="hidden" name="topic_id" value="<%= it.question.topic_id %>"/>
+            <input type="submit" value="Add Option"/>
+        </form>
+
+        <h2>Answer Options</h2>
+        <% if (it.options && it.options.length > 0) { %>
+            <ul>
+                <% it.options.forEach(option => { %>
+                    <li>
+                        <%= option.option_text %> - 
+                        <% if (option.is_correct) { %> Correct <% } else { %> Incorrect <% } %>
+                        <form method="POST" action="/topics/<%= it.question.topic_id %>/questions/<%= it.question.id %>/options/<%= option.id %>/delete">
+                            <input type="hidden" name="question_id" value="<%= it.question.id %>"/>
+                            <input type="hidden" name="topic_id" value="<%= it.question.topic_id %>"/>
+                            <input type="hidden" name="id" value="<%= option.id %>"/>
+                            <input type="submit" value="Delete option"/>
+                        </form>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No answer options available.</p>
+            <form method="POST" action="/topics/<%= it.question.topic_id %>/questions/<%= it.question.id %>/delete">
+            <input type="hidden" name="question_id" value="<%= it.question.id %>"/>
+            <input type="hidden" name="topic_id" value="<%= it.question.topic_id %>"/>
+            <input type="submit" value="Delete question"/>
+        </form>
+        <% } %>
+
+        
+
+
+    </div>
+</div>

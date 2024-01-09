@@ -1,0 +1,21 @@
+<% layout("./layouts/layout.eta") %>
+
+<h1>users</h1>
+
+<h2>Current users</h2>
+
+<% if (it.users && it.users.length > 0) { %>
+
+<ul>
+<% it.users.forEach(user => { %>
+  <li><%= user.email %> (<%= user.id %>)</li>
+<% }); %>
+</ul>
+
+<% } else { %>
+
+<p>None available.</p>
+
+<% } %>
+
+
