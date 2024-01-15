@@ -2,29 +2,27 @@ import * as questionService from "../../services/questionService.js";
 import * as answerService from "../../services/answerService.js";
 import * as topicService from "../../services/topicService.js";
 
-const deleteQuestion = async ({ request, response }) => {
-    const body = request.body({ type: "form"});
-    const params = await body.value;
+const deleteQuestion = async ({ params, response }) => {
 
-    await questionService.deleteQuestion(params.get("question_id"));
-    response.redirect("/topics/" + params.get("topic_id"));
+    await questionService.deleteQuestion(params.qId);
+    response.redirect("/topics/" + params.id);
 
 }
  
-const deleteAllQuestionsOFTopic = async ({ request, response }) => {
-    const body = request.body({ type: "form"});
-    const params = await body.value;
+const deleteAllQuestionsOFTopic = async ({ params, response }) => {
 
-    await questionService.deleteAllQuestionsOFTopic(params.get("topic_id"));
+    await questionService.deleteAllQuestionsOFTopic(params.id);
+    
 
 }
-const addQuestion = async({ request, response }) => {
+const addQuestion = async({ request, response, params, state }) => {
     const body = request.body({ type: "form" });
-    const params = await body.value;
-
-    await questionService.addQuestion(params.get("user_id"), params.get("topic_id"), params.get("question_text"));
-    console.log(params.get("topic_id"));
-    response.redirect("/topics/" + params.get("topic_id"));
+    const bodyValues = await body.value;
+    
+    const user = await state.session.get("user");
+    await questionService.addQuestion(user.id, params.id, bodyValues.get("question_text"));
+    console.log(params.id);
+    response.redirect("/topics/" + params.id);
 }
 
 const showQuestion = async ({ params, render }) => {
@@ -34,7 +32,7 @@ const showQuestion = async ({ params, render }) => {
     const question = await questionService.getQuestion(questionId);
     const options = await answerService.getAnswerOptions(questionId);
 
-    await render("question.eta", { question, options });
+    await render("question.eta", { question, options, topicId: topicId });
 }
 
 const randomQuestionByTopic = async ({ params, response, render }) => {
@@ -66,7 +64,7 @@ const showQuizTopics = async ({ render }) => {
 
 const addQuestionAnswerByUser = async ({ params, response, state }) => {
     const user = await state.session.get("user");
-    const userId = 1;
+    const userId = user.id;
     
     await questionService.addQuestionAnswerByUser(userId, params.qId, params.oId);
     const option = await answerService.getAnswerOption(params.oId);

@@ -25,7 +25,7 @@ router.post("/topics/:id/questions", questionController.addQuestion);
 router.get("/topics/:id/questions/:qId", questionController.showQuestion);
 router.post("/topics/:id/questions/:qId/options", answerController.addAnswer);
 router.post("/topics/:id/questions/:qId/options/:oId/delete", answerController.deleteAnswerOption);
-router.post("/topics/:tId/questions/:qId/delete", questionController.deleteQuestion);
+router.post("/topics/:id/questions/:qId/delete", questionController.deleteQuestion);
 
 router.get("/quiz", questionController.showQuizTopics);
 router.get("/quiz/:tId", questionController.randomQuestionByTopic);
@@ -35,6 +35,6 @@ router.get("/quiz/:tId/questions/:qId/correct", questionController.showCorrect);
 router.get("/quiz/:tId/questions/:qId/incorrect", questionController.showIncorrect);
 
 router.get("/api/questions/random", quizApi.getRandomQuestion);
-router.post("/api/questions/answer", quizApi.answerQuestion)
+router.post("/api/questions/answer", quizApi.answerQuestion);
 
 export { router };

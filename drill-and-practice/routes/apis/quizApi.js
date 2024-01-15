@@ -17,23 +17,28 @@ const getRandomQuestion = async ({ response }) => {
             questionText: question.question_text,
             answerOptions: options.map(option => ({
                 optionId: option.id,
-                optionText: option.text
+                optionText: option.option_text
             }))
         };
     }
 };
 
 const answerQuestion = async ({ request, response }) => {
-    console.log("request.body", request.body);
-    const answer = await request.body().value;
-    const is_correct = await answerService.getAnswerOption(answer.questionId).is_correct;
+    
+    const body = await request.body().value;
+    
+
+    const answerOption = await answerService.getAnswerOption(body.optionId);
+    
+
+    const is_correct = answerOption.is_correct;
+    
 
     if (is_correct) {
         response.body = { correct: true };
-    }
-    else {
+    } else {
         response.body = { correct: false };
-    }
+    }   
 };
 
 

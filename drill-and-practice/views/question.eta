@@ -50,6 +50,7 @@
 
         
 
-
+    <p>Back to the topic?</p>
+    <p><a href = "/topics/<%= it.topicId%>" > Back</a></p>
     </div>
 </div>

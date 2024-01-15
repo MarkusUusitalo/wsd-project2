@@ -1,20 +1,20 @@
 import * as answerService from '../../services/answerService.js';
 
-const addAnswer = async ({ request, response }) => {
+const addAnswer = async ({ request, response, state, params }) => {
     const body = request.body({ type: "form" });
-    const params = await body.value;
-    await answerService.addAnswerOption(params.get('question_id'), params.get('option_text'), params.get('is_correct') === "on");
+    const bodyValues = await body.value;
 
-    response.redirect('/topics/' + params.get('topic_id') + "/questions/" + params.get('question_id'));
+    const user = await state.session.get("user");
+    await answerService.addAnswerOption(params.qId, bodyValues.get('option_text'), bodyValues.get('is_correct') === "on");
+
+    response.redirect('/topics/' + params.id + "/questions/" + params.qId);
 }
 
-const deleteAnswerOption = async ({ params, request, response }) => {
-    const body = request.body({ type: "form" });
-    const vals = await body.value;
+const deleteAnswerOption = async ({ params, response }) => {
     const oId = params.oId;
     await answerService.deleteAnswer(oId);
     await answerService.deleteAnswerOption(oId);
-    response.redirect('/topics/' + vals.get('topic_id') + "/questions/" + vals.get('question_id'));
+    response.redirect('/topics/' + params.id + "/questions/" + params.qId);
 }
 
 export {addAnswer, deleteAnswerOption}
