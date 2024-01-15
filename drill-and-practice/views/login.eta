@@ -9,6 +9,9 @@
 </head>
 <body>
     <h2>Login</h2>
+    <% if (it.error) { %>
+        <p style="color: red;"><%= it.error %></p>
+    <% } %>
     <div class="login-form">
         <form method="POST" action="/auth/login">
             <div>

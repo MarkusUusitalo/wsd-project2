@@ -1,18 +1,14 @@
 # Project 2: Quiz app
 
-Write the documentation of your project here. Do not include your personal
-details (e.g. name or student number).
-
-Remember to include the address of the online location where your project is
-running as it is a key part of the submission.
-
-This app is a quiz app that allows users to create quizzes and take quizzes created by other users. The app is running on ????
+This app is a quiz app that allows users to create quizzes and take quizzes created by other users. The app is running on adress:
+https://wsd-project2-drillandpractice.onrender.com/
 
 
 ## How to run the app
 run docker compose up --build in your terminal and open http://localhost:7777 in your browser
 
 ## How to run the tests
+The tests are in e2e-playwright folder.
 Tests can be run with command: docker compose run --entrypoint=npx e2e-playwright playwright test && docker compose rm -sf
 
 ## How to use the app

@@ -10,29 +10,31 @@ const showLoginForm = ({ render }) => {
     render("login.eta");
 };
 
-const userLogin = async ({ request, response, state }) => {
+const userLogin = async ({ request, response, state, render }) => {
     const bodyResult = request.body({ type: "form" });
     const formData = await bodyResult.value;
     const email = formData.get("email");
     const password = formData.get("password");
     const userFromDatabase = await userService.findUser(email);
+    
     if (userFromDatabase.length != 1) {
-        console.log("user not found");
-        response.redirect("/");
+        
+        render("login.eta", { error: "User not found" });
         return;
     }
-
+    
     const user = userFromDatabase[0];
     const passwordMatches = await bcrypt.compare(password, user.password);
 
     if (!passwordMatches) {
-        response.redirect("/auth/login"); 
+        render("login.eta", { error: "Wrong password" });
         return;
     }
 
     await state.session.set("user", user);
     response.redirect("/topics");
 };
+
 
 const registerUser = async ({ request, response, render }) => {
     const bodyResult = await request.body({ type: "form" });

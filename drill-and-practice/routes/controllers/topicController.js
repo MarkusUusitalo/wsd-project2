@@ -16,32 +16,37 @@ const addTopic = async ({ request, response, state, render }) => {
     const rows = await topicService.findTopic(params.get("name"));
     console.log(rows);
     if (rows.length > 0) {
-        console.log("topic already exists");
+        
         render("topics.eta", { topics: await topicService.listTopics(), user: user , error: "Topic already exists." });
         return;
     }
     await topicService.addTopic(params.get("name"), user.id);
     response.redirect("/topics");
-  };
+};
 
 async function listTopics({ render, state }) {
     
     const user = state.session.get("user");
     render("topics.eta", { topics: await topicService.listTopics(), user: user });
 
-}
+};
 
-const deleteTopic = async ({ params, response }) => {
+const deleteTopic = async ({ params, response, state }) => {
+    const user = await state.session.get("user");
+    if (!user || !user.admin) {
+      response.redirect("/topics");
+      return;
+    }
     await answerService.deleteAnswer(params.id)
     await answerService.deleteAnswerOption(params.id);
     await questionService.deleteAllQuestionsOFTopic(params.id);
     await topicService.deleteTopic(params.id);
     response.redirect("/topics");
-}
+};
 
 const showTopic = async ({ params, render }) => {
     render("topic.eta", {topic: await topicService.getTopic(params.id), questions: await questionService.getQuestions(params.id)});
-}
+};
 
 const selectRandomTopic = async ({response}) => {
     const topics = await topicService.listTopics();
@@ -54,6 +59,6 @@ const selectRandomTopic = async ({response}) => {
         response.body = { error: "No topics available." };
         response.status = 404; 
     }
-}
+};
 
 export { addTopic, listTopics, deleteTopic, showTopic, selectRandomTopic };

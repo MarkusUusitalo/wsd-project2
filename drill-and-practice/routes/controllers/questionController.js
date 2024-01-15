@@ -23,7 +23,7 @@ const addQuestion = async({ request, response }) => {
     const params = await body.value;
 
     await questionService.addQuestion(params.get("user_id"), params.get("topic_id"), params.get("question_text"));
-
+    console.log(params.get("topic_id"));
     response.redirect("/topics/" + params.get("topic_id"));
 }
 
